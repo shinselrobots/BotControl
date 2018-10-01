@@ -1,0 +1,275 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#000000"
+    >
+
+    <LinearLayout
+        android:id="@+id/linearLayoutH3"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/buttonConnect"
+            style="@style/ButtonText"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="@drawable/custombuttongreen"
+            android:text="@string/connect"
+        	android:layout_gravity="top"            
+            android:layout_weight=".43"
+            android:onClick="handleButtonEvent"
+            android:textSize="25sp" />
+        
+        
+         <Button
+            android:id="@+id/buttonDisconnect"
+            style="@style/ButtonText"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="@drawable/custombuttonred"
+            android:text="@string/disconnect"
+        	android:layout_gravity="top"            
+            android:layout_weight=".43"
+            android:onClick="handleButtonEvent"
+            android:textSize="25sp" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutH2"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight=".25"
+        android:orientation="horizontal"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonblue"
+            android:text="Wave"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonblue"
+            android:text="Head Center"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonblue"
+            android:text="Wakup"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonblue"
+            android:text="Sleep"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutH3"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight=".25"
+        android:orientation="horizontal"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/button5"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombutton"
+            android:text="Follow Me"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button6"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombutton"
+            android:text="Tell Joke"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button7"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombutton"
+            android:text="Hands Up"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button8"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombutton"
+            android:text="Shake Hands"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutH4"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight=".25"
+        android:orientation="horizontal"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/button9"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttongreen"
+            android:text="Bow Greet"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button10"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttongreen"
+            android:text="Ship"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button11"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttongreen"
+            android:text="Song"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button12"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttongreen"
+            android:text="Intro"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutH5"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight=".25"
+        android:orientation="horizontal"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/button13"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonred"
+            android:text="Stop"
+            android:onClick="handleButtonEvent"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/button14"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonblue"
+            android:text="What Time"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button15"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonblue"
+            android:text="Danger"
+            android:onClick="handleButtonEvent"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/buttonAccelerometerEnable"
+            style="@style/ButtonText"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".25"
+            android:background="@drawable/custombuttonred"
+            android:text="tilt"
+            android:onClick="handleButtonEvent"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+   <LinearLayout
+        android:id="@+id/linearLayoutH1"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"        
+        android:layout_weight=".15"
+        android:orientation="vertical"
+        android:weightSum="1" >
+        
+        
+        <TextView
+            android:id="@+id/entry"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+	        android:gravity="bottom|center_horizontal"
+            android:hint="@string/entry"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"  />
+        
+    </LinearLayout>
+        
+</LinearLayout>

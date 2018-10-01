@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Sun Jun 03 16:03:40 PDT 2018
+0.baseType=DIRECTORY
+0.base=/home/system/StudioProjects/BotControl/app/build/intermediates/transforms/dexMerger/debug/0
+0.path=classes.dex
+0.set=DEX
+count=1

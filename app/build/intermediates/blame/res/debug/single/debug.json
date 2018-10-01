@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_launcher.png.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher.png.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable_custombuttonblue.xml.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable/custombuttonblue.xml"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable_custombuttonred.xml.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable/custombuttonred.xml"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable_custombuttongreen.xml.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable/custombuttongreen.xml"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable_custombutton.xml.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable/custombutton.xml"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_launcher.png.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/system/StudioProjects/BotControl/app/build/intermediates/res/merged/debug/menu_main.xml.flat",
+        "source": "/home/system/StudioProjects/BotControl/app/src/main/res/menu/main.xml"
+    }
+]
