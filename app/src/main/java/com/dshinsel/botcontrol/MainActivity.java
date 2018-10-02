@@ -30,11 +30,14 @@ public class MainActivity extends Activity implements SensorEventListener {
     // TODO: change the address to match your Bluetooth module
 	
 	// LOKI
-	//private static final String DEVICE_ADDRESS = "00:06:66:4F:90:CD"; // BlueSMirf LOKI
+	//private static final String DEVICE_ADDRESS = "00:06:66:4F:90:CD"; // "Firefly 90CD" - BlueSMirf LOKI
 	// SHELDON
-	private static final String DEVICE_ADDRESS = "00:06:66:73:E3:EA"; // BlueSMirf SHELDON
-	//private static final String DEVICE_ADDRESS = "00:06:66:73:E8:DD"; // BlueSmirf Spare
-	//private static final String DEVICE_ADDRESS = "00:06:66:4B:E3:EF"; // "Firefly E3EF" = BlueSMirf #1 - Turtle
+	private static final String DEVICE_ADDRESS = "00:06:66:4B:E3:EF"; // "Firefly E3EF" - BlueSMiRF Sheldon
+
+	// SPARE MODULES
+	// Note: "New" BlueSMiRF modules seem to not always disconnect, so they get hung up...
+	//private static final String DEVICE_ADDRESS = "00:06:66:73:E3:EA"; // New BlueSMirf Spare
+	//private static final String DEVICE_ADDRESS = "00:06:66:73:E8:DD"; // New BlueSmirf Spare
 	//private static final String DEVICE_ADDRESS = "00:A0:96:12:C0:DB"; // BlueSMirf #2 - ROBO NOVA
 	//private static final String DEVICE_ADDRESS = "00:12:05:24:95:55";  // EZ Robot module
 
@@ -260,19 +263,16 @@ public class MainActivity extends Activity implements SensorEventListener {
     	case R.id.buttonDisconnect:
     		Log.d("ButtonHandler", "Button Disconnect pressed");
             if(btConnectionState.CONNECTED != ConnectionState) {
-                Log.d("BOT DEBUG", "Disconnect:  Ignored, BT Not connected");        
-    			updateStatus("Disconnect:  Ignored, BT Not connected");
+                Log.d("BOT DEBUG", "Disconnect:  BT Not connected");
+    			updateStatus("Disconnect:  BT Not connected");
             }
-            else
-            {
-	    		// Disconnect Bluetooth 
-				ConnectionState = btConnectionState.DISCONNECTING;
-	            Log.d("BOT DEBUG", "Calling Amarino Disconnect: ");        
-	            Amarino.sendDataToArduino(this, DEVICE_ADDRESS, 'C', 0);  // Send disconnection message
-				Amarino.disconnect(this, DEVICE_ADDRESS);
-	            Log.d("BOT DEBUG", "DONE Calling Amarino Disconnect ");        
-            }
-    		break; 
+			// Disconnect Bluetooth
+			ConnectionState = btConnectionState.DISCONNECTING;
+			Log.d("BOT DEBUG", "Calling Amarino Disconnect: ");
+			Amarino.sendDataToArduino(this, DEVICE_ADDRESS, 'C', 0);  // Send disconnection message
+			Amarino.disconnect(this, DEVICE_ADDRESS);
+			Log.d("BOT DEBUG", "DONE Calling Amarino Disconnect ");
+    		break;
     		
     		
     	case R.id.buttonConnect:
@@ -281,10 +281,10 @@ public class MainActivity extends Activity implements SensorEventListener {
                 Log.d("BOT DEBUG", "Connect: Already Connected");        
     			updateStatus("Connect: BT Already Connected");
             }
-            else if(btConnectionState.DISCONNECTED != ConnectionState) {
-                Log.d("BOT DEBUG", "Connect: BT Stack Busy, Try Again");        
-    			updateStatus("Connect: BT Stack Busy, Try Again");
-            }
+            //else if(btConnectionState.DISCONNECTED != ConnectionState) {
+            //    Log.d("BOT DEBUG", "Connect: BT Stack Busy, Try Again");
+    		//	updateStatus("Connect: BT Stack Busy, Try Again");
+            //}
             else
             {
 	            // Toggle button text?
@@ -404,12 +404,19 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 	
     ///////////////////////////////////////////////////////////////////
-	// Register event listeners for Accelerometer and Compass onResume
+	// onResume - Do all startup work, including
+    // Register event listeners for Accelerometer and Compass
+    // Connect bluetooth to robot
 	@Override
 	protected void onResume() {
 	    super.onResume();
 	    // register this class as a listener for the orientation and
 	    // accelerometer sensors
+        Log.d("BOT DEBUG", "OnResume called");
+
+        ConnectionState = btConnectionState.DISCONNECTED;
+        updateStatus("Disconnected");
+
 	    if( AccelerometerEnabled ) {
 		    sensorManager.registerListener(this,
 		        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -420,19 +427,59 @@ public class MainActivity extends Activity implements SensorEventListener {
 		    SensorEventRegistered = true;
     		Log.d("BOT DEBUG", "Accelerometer enabled");
 	    }
-	}
+
+        Log.d("BOT DEBUG", "Registering Broadcast Receivers");
+        // in order to receive broadcasted intents we need to register our receivers
+        registerReceiver(ConnectReceiver, new IntentFilter(AmarinoIntent.ACTION_CONNECTED));
+        registerReceiver(DisconnectReceiver, new IntentFilter(AmarinoIntent.ACTION_DISCONNECTED));
+        registerReceiver(ConnectFailedReceiver, new IntentFilter(AmarinoIntent.ACTION_CONNECTION_FAILED));
+        registerReceiver(PairingRequiredReceiver, new IntentFilter(AmarinoIntent.ACTION_PAIRING_REQUESTED));
+        registerReceiver(DataReceiver, new IntentFilter(AmarinoIntent.ACTION_RECEIVED));
+
+        if(btConnectionState.CONNECTED != ConnectionState) {
+            // Auto-Connect to Bluetooth device when app starts or resumes
+            ConnectionState = btConnectionState.CONNECTING;
+            updateStatus("Connecting...");
+            Log.d("BOT DEBUG", "Calling Amarino Connect: ");
+            Amarino.connect(this, DEVICE_ADDRESS);
+            //myButton.setText("Disconnect");
+            Log.d("BOT DEBUG", "DONE Calling Amarino Connect ");
+        }
+
+
+
+    }
 	
     ///////////////////////////////////////////////////////////////////
+    // onPause - Do all shutdown work, including
 	// UnRegister event listeners for Accelerometer and Compass onPause
+    // Disconnect bluetooth from Robot
 	@Override
 	protected void onPause() {
-	    // unregister listener
+
+        Log.d("BOT DEBUG", "OnPause called");
+
+	    // unregister sensor listener
 	    super.onPause();
 	    if( SensorEventRegistered ) {
 		    sensorManager.unregisterListener(this);
 		    SensorEventRegistered = false;	    	
     		Log.d("BOT DEBUG", "Accelerometer disabled");
 	    }
+
+        // stop Amarino's background service when exiting or hidden
+        Amarino.sendDataToArduino(this, DEVICE_ADDRESS, 'C', 0);  // Send disconnection message
+        Amarino.disconnect(this, DEVICE_ADDRESS);
+        // don't forget to unregister all registered receivers
+        unregisterReceiver(ConnectReceiver);
+        unregisterReceiver(DisconnectReceiver);
+        unregisterReceiver(ConnectFailedReceiver);
+        unregisterReceiver(PairingRequiredReceiver);
+        unregisterReceiver(DataReceiver);
+        ConnectionState = btConnectionState.DISCONNECTED; // can't wait for event during Stop
+        disableAccelerometer();	// Disable the accelerometer whenever we lose Bluetooth connection
+
+
 	}
       
 	    
@@ -451,6 +498,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 	@Override
 	protected void onStart() {
 		super.onStart();
+        // Note - all startup stuff moved to onResume
+
 		/*
 		// load last state, if desired in the future
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -458,14 +507,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         green = prefs.getInt("green", 0);
         blue = prefs.getInt("blue", 0);
 		*/
-		
-        Log.d("BOT DEBUG", "Registering Broadcast Receivers");
-        // in order to receive broadcasted intents we need to register our receivers	
-		registerReceiver(ConnectReceiver, new IntentFilter(AmarinoIntent.ACTION_CONNECTED));
-		registerReceiver(DisconnectReceiver, new IntentFilter(AmarinoIntent.ACTION_DISCONNECTED));
-		registerReceiver(ConnectFailedReceiver, new IntentFilter(AmarinoIntent.ACTION_CONNECTION_FAILED));
-		registerReceiver(PairingRequiredReceiver, new IntentFilter(AmarinoIntent.ACTION_PAIRING_REQUESTED));
-		registerReceiver(DataReceiver, new IntentFilter(AmarinoIntent.ACTION_RECEIVED));
 		
 	}
 
@@ -475,6 +516,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 	@Override
 	protected void onStop() {
 		super.onStop();
+        // Note - all shutdown stuff moved to onPause
+
 		// save state
 		/*
 		PreferenceManager.getDefaultSharedPreferences(this)
@@ -484,19 +527,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 				.putInt("blue", blue)
 			.commit();
 		*/
-	
-		
-		// stop Amarino's background service when exiting or hidden 
-        Amarino.sendDataToArduino(this, DEVICE_ADDRESS, 'C', 0);  // Send disconnection message
-		Amarino.disconnect(this, DEVICE_ADDRESS);
-		// don't forget to unregister all registered receivers
-		unregisterReceiver(ConnectReceiver);			
-		unregisterReceiver(DisconnectReceiver);			
-		unregisterReceiver(ConnectFailedReceiver);			
-		unregisterReceiver(PairingRequiredReceiver);			
-		unregisterReceiver(DataReceiver);	
-		ConnectionState = btConnectionState.DISCONNECTED; // can't wait for event during Stop
-		disableAccelerometer();	// Disable the accelerometer whenever we lose Bluetooth connection
 
 	}
 

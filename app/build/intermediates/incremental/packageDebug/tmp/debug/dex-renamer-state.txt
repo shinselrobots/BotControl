@@ -1,4 +1,0 @@
-#Thu Jun 14 12:56:32 PDT 2018
-base.0=/home/system/StudioProjects/BotControl/app/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex
